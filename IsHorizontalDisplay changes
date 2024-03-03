@@ -1,0 +1,22 @@
+1. in public-types.dts added to DisplayOption isHorizontalDisplay boolean;
+2. in Gantt.tsx 
+	- created local variable isHorizontalDisplay based on _ref.isHorizontalDisplay
+	- in call to convertToBarTasks function added isHorizontalDisplay variable and populated from local variable in Gantt
+	- Added isHorizontalDisplay boolean to gridProps, barProps and tableProps
+	- Added barTaskUniqueIndices to make sure GanttHeight is adjusted when multiple tasks are on same line/index in horizontal mode
+	- Fed BarTaskIndexMax parameter based on barTaskUniqueIndices to TaskGantt
+3. Update bar-helper.tsx: Introduced corrected index to keep index same if next task in line 'fits' next to other task (doesn't overlap)
+4. Update task-gantt.tsx: 
+	- Added barTaskIndexMax property
+	- Added dynamic height based on isHorizontalDisplay setting and newly introduced barTaskUniqueIndices 
+	- Added viewMode to newBarProps to feed to TaskGanttContent
+5. Update grid-body.tsx
+	- Don't create new row in gridBody if tasks can fit horizontally next to each other
+6. Update task-gantt-content.tsx
+	- Added isHorizontalDisplay and viewMode property and feed it to TaskItem
+7. Update task-item.tsx
+	- Added mechanism to put label inside task and abbreviate if in horizontal display mode and the label is too big. Also added ViewMode dependency to retrigger logic once view mode changes.
+8. Update task-list-table.tsx
+	- Implemented isHorizontalDisplay correction of task index
+9. Update task-list.tsx	
+	- Added isHorizontalDisplay to tableProps
